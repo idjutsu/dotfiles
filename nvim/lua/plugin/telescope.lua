@@ -4,11 +4,16 @@ return {
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-telescope/telescope-file-browser.nvim",
-			"nvim-telescope/telescope-fzf-native.nvim",
+			-- "nvim-telescope/telescope-fzf-native.nvim",
+			{
+				"nvim-telescope/telescope-fzf-native.nvim",
+				build = "make",
+				-- config は削除してOK
+			},
 		},
-		build = function()
-			vim.fn.system("make", { cwd = vim.fn.stdpath("data") .. "/lazy/telescope-fzf-native.nvim" })
-		end,
+		-- build = function()
+		-- 	vim.fn.system("make", { cwd = vim.fn.stdpath("data") .. "/lazy/telescope-fzf-native.nvim" })
+		-- end,
 		config = function()
 			local telescope = require("telescope")
 
