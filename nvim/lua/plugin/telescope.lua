@@ -4,28 +4,23 @@ return {
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-telescope/telescope-file-browser.nvim",
-			-- "nvim-telescope/telescope-fzf-native.nvim",
 			{
 				"nvim-telescope/telescope-fzf-native.nvim",
 				build = "make",
-				-- config は削除してOK
 			},
 		},
-		-- build = function()
-		-- 	vim.fn.system("make", { cwd = vim.fn.stdpath("data") .. "/lazy/telescope-fzf-native.nvim" })
-		-- end,
 		config = function()
 			local telescope = require("telescope")
 
 			-- Telescopeの基本設定
 			telescope.setup({
 				defaults = {
-					file_ignore_patterns = { ".git/", "node_modules", "vendor/" }, -- 除外したいフォルダ
+					file_ignore_patterns = { "%.git$", "%.git/", "%.DS_Store$", "node_modules", "vendor/" }, -- 除外したいフォルダ
 				},
 				extensions = {
 					file_browser = {
 						--cwd_to_path = true,
-						file_ignore_patterns = { ".git/", "vendor/" },
+						file_ignore_patterns = { "%.git$", "%.git/", "%.DS_Store$", "vendor/" },
 						hidden = true,
 						hijack_netrw = true, -- netrwを無効化
 						path = "%:p:h",
