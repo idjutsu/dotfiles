@@ -115,10 +115,6 @@ plugins=(
 
 source "$OSH"/oh-my-bash.sh
 
-if [ -f /etc/bash_completion ]; then
-  . /etc/bash_completion
-fi
-
 # User configuration
 # export MANPATH="/usr/local/man:$MANPATH"
 
