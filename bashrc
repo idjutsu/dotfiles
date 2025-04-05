@@ -144,3 +144,7 @@ source "$OSH"/oh-my-bash.sh
 # alias ohmybash="mate ~/.oh-my-bash"
 
 export INPUTRC="$HOME/.inputrc"
+
+if [ -f "$HOME/.env" ]; then
+  source "$HOME/.env"
+fi
