@@ -14,6 +14,9 @@ link_dotfile() {
   local src="$1"
   local target="$2"
 
+  # 親ディレクトリが存在しない場合は作成
+  mkdir -p "$(dirname "$target")"
+
   if [ -e "$target" ] || [ -L "$target" ]; then
     echo "🔁 Backing up $target"
     mv "$target" "$BACKUP_DIR/"
