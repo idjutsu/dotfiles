@@ -145,6 +145,8 @@ source "$OSH"/oh-my-bash.sh
 
 export INPUTRC="$HOME/.inputrc"
 
-if [ -f "$HOME/.env" ]; then
-  source "$HOME/.env"
+if [ -f "$HOME/.bash.env" ]; then
+  set -a
+  . "$HOME/.bash.env"
+  set +a
 fi
