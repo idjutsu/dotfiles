@@ -10,9 +10,10 @@ echo "🔙 Backing up existing files to $BACKUP_DIR"
 
 mkdir -p "$BACKUP_DIR"
 
-copy_dotfile() {
+link_dotfile() {
   local src="$1"
   local target="$2"
+  local permission="$3"
 
   # 親ディレクトリが存在しない場合は作成
   mkdir -p "$(dirname "$target")"
@@ -22,14 +23,26 @@ copy_dotfile() {
     mv "$target" "$BACKUP_DIR/"
   fi
 
-  echo "📄 Copying $src → $target"
-  cp -a "$DOTFILES_DIR/$src" "$target"
+  echo "🔗 Linking $src → $target"
+  ln -s "$DOTFILES_DIR/$src" "$target"
+
+  # パーミッションを設定（リンク先に対して）
+  real_path="$DOTFILES_DIR/$src"
+  if [ -f "$real_path" ]; then
+    echo "🔒 Setting permission $permission on $real_path"
+    chmod "$permission" "$real_path"
+  fi
 }
 
-# 各dotfileのコピー（パーミッション変更は行わない）
-copy_dotfile "bashrc"     "$HOME/.bashrc"
-copy_dotfile "inputrc"    "$HOME/.inputrc"
-copy_dotfile "tmux.conf"  "$HOME/.tmux.conf"
-copy_dotfile "nvim"       "$HOME/.config/nvim"
+# 各 dotfile のリンクとパーミッション設定
+link_dotfile "bashrc"     "$HOME/.bashrc"         600
+link_dotfile "inputrc"    "$HOME/.inputrc"        600
+link_dotfile "tmux.conf"  "$HOME/.tmux.conf"      600
+link_dotfile "nvim"       "$HOME/.config/nvim"    700
+
+# nvim 配下のパーミッションも設定（ディレクトリ: 700、ファイル: 600）
+echo "🔒 Setting permissions inside nvim/"
+find "$DOTFILES_DIR/nvim" -type d -exec chmod 700 {} \;
+find "$DOTFILES_DIR/nvim" -type f -exec chmod 600 {} \;
 
 echo "✅ Dotfiles setup complete!"
