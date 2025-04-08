@@ -10,7 +10,7 @@ echo "🔙 Backing up existing files to $BACKUP_DIR"
 
 mkdir -p "$BACKUP_DIR"
 
-link_dotfile() {
+copy_dotfile() {
   local src="$1"
   local target="$2"
 
@@ -22,14 +22,14 @@ link_dotfile() {
     mv "$target" "$BACKUP_DIR/"
   fi
 
-  echo "🔗 Linking $src → $target"
-  ln -s "$DOTFILES_DIR/$src" "$target"
+  echo "📄 Copying $src → $target"
+  cp -a "$DOTFILES_DIR/$src" "$target"
 }
 
-# 各dotfileのリンク
-link_dotfile "bashrc"     "$HOME/.bashrc"
-link_dotfile "inputrc"    "$HOME/.inputrc"
-link_dotfile "tmux.conf"  "$HOME/.tmux.conf"
-link_dotfile "nvim"       "$HOME/.config/nvim"
+# 各dotfileのコピー（パーミッション変更は行わない）
+copy_dotfile "bashrc"     "$HOME/.bashrc"
+copy_dotfile "inputrc"    "$HOME/.inputrc"
+copy_dotfile "tmux.conf"  "$HOME/.tmux.conf"
+copy_dotfile "nvim"       "$HOME/.config/nvim"
 
 echo "✅ Dotfiles setup complete!"
