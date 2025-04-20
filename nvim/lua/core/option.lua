@@ -5,4 +5,5 @@ vim.opt.cul = true
 vim.opt.et = true
 vim.opt.nu = true
 vim.opt.sw = 4
+vim.opt.termguicolors = true
 vim.opt.ts = 4
